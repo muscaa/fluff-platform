@@ -19,11 +19,13 @@ public class NativeLibraryPaths<V> {
      * Constructs a new NativeLibraryPaths instance.
      */
     public NativeLibraryPaths() {
-        int size = 0;
+    	this.paths = new ArrayList<>();
+    	
         for (OS os : OS.values()) {
-            size += os.getArchitectures().length;
+        	for (int i = 0; i < os.getArchitectures().length; i++) {
+        		paths.add(null);
+        	}
         }
-        this.paths = new ArrayList<>(size);
     }
     
     /**
