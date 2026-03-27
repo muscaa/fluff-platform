@@ -13,6 +13,11 @@ public enum OS {
     FREEBSD("so", OSArch.X32, OSArch.X64),
     AIX("so", OSArch.PPC32, OSArch.PPC64),
     UNKNOWN(null);
+	
+    /**
+     * The system's operating system.
+     */
+    public static final OS SYSTEM = getByName(System.getProperty("os.name"));
     
     private final String libExtension;
     private final OSArch[] architectures;
@@ -70,21 +75,22 @@ public enum OS {
     }
     
     /**
-     * The system's operating system.
+     * Gets the OS by the name.
+     * 
+     * @param name the os name
+     * @return the os
      */
-    public static final OS SYSTEM;
-    
-    static {
-        String os = System.getProperty("os.name").toLowerCase();
-        
-        if (os.contains("win")) SYSTEM = WINDOWS;
-        else if (os.contains("nix") || os.contains("nux")) SYSTEM = LINUX;
-        else if (os.contains("mac")) SYSTEM = OSX;
-        else if (os.contains("android")) SYSTEM = ANDROID;
-        else if (os.contains("ios")) SYSTEM = IOS;
-        else if (os.contains("sunos")) SYSTEM = SOLARIS;
-        else if (os.contains("freebsd")) SYSTEM = FREEBSD;
-        else if (os.contains("aix")) SYSTEM = AIX;
-        else SYSTEM = UNKNOWN;
+    public static OS getByName(String name) {
+    	String os = name.toLowerCase();
+    	
+        if (os.contains("win")) return WINDOWS;
+        else if (os.contains("nix") || os.contains("nux")) return LINUX;
+        else if (os.contains("mac")) return OSX;
+        else if (os.contains("android")) return ANDROID;
+        else if (os.contains("ios")) return IOS;
+        else if (os.contains("sunos")) return SOLARIS;
+        else if (os.contains("freebsd")) return FREEBSD;
+        else if (os.contains("aix")) return AIX;
+        else return UNKNOWN;
     }
 }

@@ -15,6 +15,11 @@ public enum OSArch {
     PPC64(true),
     UNKNOWN(false);
     
+    /**
+     * The system's architecture.
+     */
+    public static final OSArch SYSTEM = getByName(System.getProperty("os.arch"));
+    
     private final boolean is64Bit;
     
     /**
@@ -45,11 +50,14 @@ public enum OSArch {
     }
     
     /**
-     * The system's architecture.
+     * Gets the architecture by the name.
+     * 
+     * @param name the arch name
+     * @return the arch
      */
-    public static final OSArch SYSTEM;
-    
-    static {
+    public static OSArch getByName(String name) {
+    	String arch = name.toLowerCase();
+    	
         Map<String, OSArch> map = new HashMap<>();
         map.put("x86", X32);
         map.put("amd64", X64);
@@ -70,8 +78,6 @@ public enum OSArch {
         // map.put("s390", UNKNOWN);
         // map.put("s390x", UNKNOWN);
         
-        String arch = System.getProperty("os.arch");
-        
-        SYSTEM = map.containsKey(arch) ? map.get(arch) : UNKNOWN;
+        return map.containsKey(arch) ? map.get(arch) : UNKNOWN;
     }
 }
